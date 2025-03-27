@@ -54,13 +54,21 @@ export class DashboardComponent implements OnInit {
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
-    this.itemsSignal.set([
+    this.apiService.getData('assets/data.json').subscribe({
+      next: (items : any) => {
+        this.itemsSignal.set(items);
+      },
+      error: (error : any) => {
+        console.error('Error fetching items', error);
+      }
+    });
+    /*this.itemsSignal.set([
       { color: '#6EE7B7', name: 'Car accident', createDate: '03/02/2021', lastUpdate: '03/02/2021', createdBy: 'Ori Lugasi' },
       { color: '#F472B6', name: 'Human trafficking for prostitution', createDate: '26/01/2021', lastUpdate: '26/01/2021', createdBy: 'Ran Shim' },
       { color: '#F472B6', name: 'Human trafficking for prostitution', createDate: '26/01/2021', lastUpdate: '26/01/2021', createdBy: 'Ran Shim' },
       { color: '#F472B6', name: 'Human trafficking for prostitution', createDate: '26/01/2021', lastUpdate: '26/01/2021', createdBy: 'Ran Shim' },
       { color: '#F472B6', name: 'Human trafficking for prostitution', createDate: '26/01/2021', lastUpdate: '26/01/2021', createdBy: 'Ran Shim' },
-    ]);;
+    ]);;*/
   }
 
   toggleViewType() {
@@ -72,7 +80,7 @@ export class DashboardComponent implements OnInit {
     this.filterText.set(this.filterInputValue);
     console.log('filterText signal value:', this.filterText());
     console.log('filteredItems after filter:', this.filteredItems());
-    console.log('filteredItems after filter:', this.itemsSignal()); // Log filtered items
+    console.log('filteredItems after filter:', this.itemsSignal());
   }
 
   toggleSidenav() {
