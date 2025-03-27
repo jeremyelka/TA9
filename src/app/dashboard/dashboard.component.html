@@ -1,0 +1,56 @@
+<mat-sidenav-container class="dashboard-container">
+    <mat-sidenav mode="side" position="end" [opened]="isSidenavOpen()">
+      <mat-toolbar>Create New</mat-toolbar>
+      <div class="sidenav-content">
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Type tag name...">
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Tag Description</mat-label>
+          <textarea matInput placeholder="Type tag description..."></textarea>
+        </mat-form-field>
+      </div>
+    </mat-sidenav>
+  
+    <mat-sidenav-content>
+      <div class="dashboard">
+        <div class="management-tool-header">
+          <div class="url-input-container width-400">
+            <input type="text" class="url-input" placeholder="URL" />
+            <button class="go-button">GO</button>
+          </div>
+  
+          <div class="view-actions">
+            <div class="tool-title">Management Tool</div>
+            <div class="view-icons">
+              <button class="grid-view-icon" (click)="toggleViewType()">
+                <img [src]="'assets/list.svg'"/>
+              </button>
+              <button class="list-view-icon" (click)="toggleViewType()">
+                <img src="assets/title.svg"/>
+              </button>
+              <button class="add-icon" (click)="toggleSidenav()">
+                <img src="assets/title.svg"/>
+              </button>
+            </div>
+          </div>
+  
+          <div class="url-input-container">
+            <input
+              [(ngModel)]="filterInputValue"
+              (ngModelChange)="onFilterInputChange()"
+              placeholder="Find by name..."
+              class="url-input"
+            />
+          </div>
+  
+          <app-table-data
+            [items]="filteredItems"
+            [viewType]="viewType()"
+          ></app-table-data>
+        </div>
+      </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

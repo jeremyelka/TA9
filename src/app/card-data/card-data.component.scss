@@ -1,0 +1,75 @@
+.dashboard {
+    padding: 20px;
+  
+    .management-tool-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+  
+      .url-input-container {
+        display: flex;
+        gap: 10px;
+        width: 300px;
+  
+        &.width-400 {
+          width: 400px;
+        }
+  
+        .url-input {
+          flex-grow: 1;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+        }
+  
+        .go-button {
+          padding: 10px 15px;
+          background-color: #007bff;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+  
+          &:hover {
+            background-color: #0056b3;
+          }
+        }
+      }
+  
+      .view-actions {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+  
+        .tool-title {
+          font-size: 1.5em;
+          font-weight: bold;
+        }
+  
+        .view-icons {
+          display: flex;
+          gap: 10px;
+  
+          button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+  
+            img {
+              width: 24px;
+              height: 24px;
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+      gap: 15px;
+    }
+  }
