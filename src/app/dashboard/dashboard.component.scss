@@ -88,7 +88,6 @@
     }
   }
   
-  // Responsive adjustments
   @media (max-width: 768px) {
     .management-tool-header {
       .view-actions {
@@ -104,3 +103,41 @@
   .width-400{
     width: 400px;
   }
+  .mat-drawer-content {
+    background-color: #F2F6F9;
+}
+mat-sidenav {
+    width: 400px; 
+    height: 100vh; 
+    background: #ffffff; 
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2); 
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sidenav-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex-grow: 1; 
+  }
+  
+  mat-toolbar {
+    background-color: #f5f5f5;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  
+  .dashboard-container {
+    height: 100vh; 
+  }
+  
+  .mat-sidenav-content {
+    background-color: #F2F6F9; 
+  }
+  
