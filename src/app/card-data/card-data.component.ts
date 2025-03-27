@@ -1,6 +1,11 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, AfterViewInit, Signal, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 interface ItemElement {
   color: string;
@@ -13,10 +18,42 @@ interface ItemElement {
 @Component({
   selector: 'app-card-data',
   standalone: true,
-  imports: [CommonModule, MatCardModule], 
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    FormsModule
+  ],
   templateUrl: './card-data.component.html',
-  styleUrl: './card-data.component.scss'
+  styleUrls: ['./card-data.component.scss']
 })
-export class CardDataComponent {
-  @Input() item!: ItemElement; 
+export class CardDataComponent implements OnInit, AfterViewInit {
+  @Input() items: Signal<ItemElement[]> = signal([]);
+
+  pageSizes: number[] = [3, 5, 10];
+  pageSize = signal(3);
+  currentPage = signal(0);
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  filteredItems = computed(() => {
+    return this.items();
+  });
+
+  paginatedItems = computed(() => {
+    const startIndex = this.currentPage() * this.pageSize();
+    return this.filteredItems().slice(startIndex, startIndex + this.pageSize());
+  });
+
+  ngOnInit() {}
+
+  ngAfterViewInit() {
+    this.paginator.page.subscribe((event) => {
+      this.currentPage.set(event.pageIndex);
+      this.pageSize.set(event.pageSize);
+    });
+  }
 }

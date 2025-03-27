@@ -47,9 +47,14 @@
           </div>
   
           <app-table-data
+            *ngIf="viewType() === 'list'"
             [items]="filteredItems"
-            [viewType]="viewType()"
           ></app-table-data>
+
+          <app-card-data
+            *ngIf="viewType() === 'grid'"
+            [items]="filteredItems"
+          ></app-card-data>
         </div>
       </div>
     </mat-sidenav-content>

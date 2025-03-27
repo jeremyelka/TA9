@@ -1,6 +1,6 @@
 <div *ngIf="items().length === 0">Loading...</div>
 
-<div [ngClass]="viewType === 'list' ? 'list-view' : 'grid-view'">
+<div>
   <table mat-table [dataSource]="dataSource()" class="custom-mat-table">
     <ng-container matColumnDef="color">
       <th mat-header-cell *matHeaderCellDef>Color</th>

@@ -37,7 +37,7 @@ export class TableDataComponent implements OnInit, AfterViewInit {
   @Input() items: Signal<ItemElement[]> = signal([]);
 
 
-  @Input() viewType: string = 'list';
+  //@Input() viewType: string = 'list';
 
 
   displayedColumns: string[] = ['color', 'name', 'createDate', 'lastUpdate', 'createdBy'];
