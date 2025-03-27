@@ -1,37 +1,62 @@
 <mat-sidenav-container class="dashboard-container">
+
     <mat-sidenav mode="side" position="end" [opened]="isSidenavOpen()">
         <button mat-icon-button (click)="closeSidenav()">
-            <mat-icon>close</mat-icon>
-          </button>
+          <mat-icon>close</mat-icon>
+        </button>
         <mat-toolbar>Create New</mat-toolbar>
-      
-      <div class="sidenav-content">
-        <div class="input-row">
-          <mat-form-field appearance="outline" class="name-field">
-            <mat-label>Title</mat-label>
-            <input matInput placeholder="Type title...">
-          </mat-form-field>
+        <div class="sidenav-content">
+            <div style="display: flex;align-items: center;justify-content: space-between;">
 
-          <mat-form-field appearance="outline" class="color-select-field">
-            <mat-label>Choose a Color</mat-label>
-            <mat-select [(value)]="selectedColor">
-              <mat-option *ngFor="let color of colorOptions" [value]="color.value">
-                <div class="color-indicator" [style.background-color]="color.value"></div>
-              </mat-option>
-              <mat-select-trigger>
-                <div class="selected-color-display" [style.background-color]="selectedColor"></div>
-                <span style="visibility: hidden;">{{ selectedColor }}</span>
-              </mat-select-trigger>
-            </mat-select>
-          </mat-form-field>
+          <div class="input-group">
+            <div class="input-label">Name</div>
+            <input 
+              type="text" 
+              placeholder="Type tag name..." 
+              [(ngModel)]="newItemTitle"
+              class="minimal-input"
+              style="width: 160%;"
+            >
+          </div>
+      
+
+          <div class="input-group color-input-group">
+            <div class="input-label">Color</div>
+            <div class="select-wrapper">
+              <select 
+                [(ngModel)]="selectedColor" 
+                class="minimal-select"
+                style="width: 40px;"
+              >
+                <option 
+                  *ngFor="let color of colorOptions" 
+                  [value]="color.value"
+                >
+                  {{ color.value }}
+                </option>
+              </select>
+
+              <div 
+                class="color-rectangle" 
+                [style.backgroundColor]="selectedColor"
+              ></div>
+            </div>
+            </div>
+          
+          </div>
+      
+
+          <div class="input-group">
+            <div class="input-label">Tag Description</div>
+            <textarea 
+              placeholder="Type tag description..." 
+              [(ngModel)]="newItemDescription"
+              class="minimal-textarea"
+            ></textarea>
+          </div>
         </div>
-  
-        <mat-form-field appearance="outline">
-          <mat-label>Tag Description</mat-label>
-          <textarea matInput placeholder="Type tag description..."></textarea>
-        </mat-form-field>
-      </div>
-    </mat-sidenav>
+      </mat-sidenav>
+      
   
     <mat-sidenav-content>
       <div class="dashboard">

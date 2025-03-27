@@ -33,10 +33,7 @@ interface ItemElement {
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
-    MatInputModule,
-    MatOption,
-    MatSelectTrigger,
-    MatSelect
+    MatInputModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
@@ -53,16 +50,18 @@ export class DashboardComponent implements OnInit {
     );
   });
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
-  selectedColor: string = ''; // Store the selected color value
-  newItemColor: string = ''; // Add this line
+  selectedColor: string = '#000000';  // Initial color set to black
+  newItemTitle: string = '';
+  newItemDescription: string = '';
+
   colorOptions = [
+    { value: '#000000' },
     { value: '#FF5733' },
     { value: '#33FF57' },
     { value: '#3357FF' },
     { value: '#FF33A1' },
     { value: '#FFFF33' }
   ];
-
   isSidenavOpen = signal(false);
 
   constructor(private apiService: ApiService) {}
@@ -85,7 +84,6 @@ export class DashboardComponent implements OnInit {
     ]);
   }
 
-   // Method to close sidenav
    closeSidenav() {
     this.sidenav.close();
   }
@@ -105,4 +103,5 @@ export class DashboardComponent implements OnInit {
   toggleSidenav() {
     this.isSidenavOpen.update((open) => !open);
   }
+
 }
