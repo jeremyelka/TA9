@@ -1,15 +1,16 @@
-import { Component, computed, OnInit, signal, inject } from '@angular/core';
+import { Component, computed, OnInit, signal, inject, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TableDataComponent } from '../table-data/table-data.component';
 import { ApiService } from '../services/api/api.service';
 import { CardDataComponent } from '../card-data/card-data.component';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatOption, MatSelect, MatSelectTrigger } from '@angular/material/select';
 
 interface ItemElement {
   color: string;
@@ -32,7 +33,10 @@ interface ItemElement {
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatOption,
+    MatSelectTrigger,
+    MatSelect
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
@@ -48,6 +52,16 @@ export class DashboardComponent implements OnInit {
       item.name.toLowerCase().includes(filter)
     );
   });
+  @ViewChild(MatSidenav) sidenav!: MatSidenav;
+  selectedColor: string = ''; // Store the selected color value
+  newItemColor: string = ''; // Add this line
+  colorOptions = [
+    { value: '#FF5733' },
+    { value: '#33FF57' },
+    { value: '#3357FF' },
+    { value: '#FF33A1' },
+    { value: '#FFFF33' }
+  ];
 
   isSidenavOpen = signal(false);
 
@@ -69,6 +83,11 @@ export class DashboardComponent implements OnInit {
       { color: '#F472B6', name: 'Human trafficking for prostitution', createDate: '26/01/2021', lastUpdate: '26/01/2021', createdBy: 'Ran Shim' },
       { color: '#F472B6', name: 'Human trafficking for prostitution', createDate: '26/01/2021', lastUpdate: '26/01/2021', createdBy: 'Ran Shim' },
     ]);
+  }
+
+   // Method to close sidenav
+   closeSidenav() {
+    this.sidenav.close();
   }
 
   toggleViewType() {

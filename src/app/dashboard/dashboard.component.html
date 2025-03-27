@@ -1,11 +1,30 @@
 <mat-sidenav-container class="dashboard-container">
     <mat-sidenav mode="side" position="end" [opened]="isSidenavOpen()">
-      <mat-toolbar>Create New</mat-toolbar>
+        <button mat-icon-button (click)="closeSidenav()">
+            <mat-icon>close</mat-icon>
+          </button>
+        <mat-toolbar>Create New</mat-toolbar>
+      
       <div class="sidenav-content">
-        <mat-form-field appearance="outline">
-          <mat-label>Name</mat-label>
-          <input matInput placeholder="Type tag name...">
-        </mat-form-field>
+        <div class="input-row">
+          <mat-form-field appearance="outline" class="name-field">
+            <mat-label>Title</mat-label>
+            <input matInput placeholder="Type title...">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="color-select-field">
+            <mat-label>Choose a Color</mat-label>
+            <mat-select [(value)]="selectedColor">
+              <mat-option *ngFor="let color of colorOptions" [value]="color.value">
+                <div class="color-indicator" [style.background-color]="color.value"></div>
+              </mat-option>
+              <mat-select-trigger>
+                <div class="selected-color-display" [style.background-color]="selectedColor"></div>
+                <span style="visibility: hidden;">{{ selectedColor }}</span>
+              </mat-select-trigger>
+            </mat-select>
+          </mat-form-field>
+        </div>
   
         <mat-form-field appearance="outline">
           <mat-label>Tag Description</mat-label>
@@ -26,13 +45,13 @@
             <div class="tool-title">Management Tool</div>
             <div class="view-icons">
               <button class="grid-view-icon" (click)="toggleViewType()">
-                <img [src]="'assets/list.svg'"/>
+                <img [src]="'assets/list.svg'" />
               </button>
               <button class="list-view-icon" (click)="toggleViewType()">
-                <img src="assets/title.svg"/>
+                <img src="assets/title.svg" />
               </button>
               <button class="add-icon" (click)="toggleSidenav()">
-                <img src="assets/title.svg"/>
+                <img src="assets/title.svg" />
               </button>
             </div>
           </div>
@@ -50,7 +69,7 @@
             *ngIf="viewType() === 'list'"
             [items]="filteredItems"
           ></app-table-data>
-
+  
           <app-card-data
             *ngIf="viewType() === 'grid'"
             [items]="filteredItems"
@@ -58,4 +77,5 @@
         </div>
       </div>
     </mat-sidenav-content>
-</mat-sidenav-container>
+  </mat-sidenav-container>
+  
