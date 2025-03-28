@@ -47,7 +47,6 @@ export class ItemFieldsComponent implements OnInit {
   constructor(private store: Store) {}
 
   ngOnInit() {
-    // Subscribe to the selected item from the store and populate fields
     this.store.select(selectSelectedItem).subscribe(item => {
       if (item) {
         this.id = item.id;
@@ -67,7 +66,7 @@ export class ItemFieldsComponent implements OnInit {
         description: this.newItemDescription,
         createDate: new Date().toLocaleDateString(),
         lastUpdate: new Date().toLocaleDateString(),
-        createdBy: 'Admin', // Replace with actual user logic
+        createdBy: 'Admin', 
     };
     this.store.dispatch(addOrUpdateItem({ item: newItem }));
   }
@@ -76,7 +75,7 @@ export class ItemFieldsComponent implements OnInit {
   closeSidebar() {
     this.id = 0;
     this.newItemTitle = '';
-    this.selectedColor = '';  // You can set this to a default color if needed
+    this.selectedColor = ''; 
     this.newItemDescription = '';
     this.close.emit();
   }

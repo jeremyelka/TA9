@@ -1,20 +1,22 @@
 <div class="card-container">
-    <mat-card (click)="sendItem(item)" *ngFor="let item of paginatedItems()" class="item-card cursor">
-      <div class="color-wrapper">
-        <div class="color-indicator mrg-top-30" [style.background-color]="item.color"></div>
-      </div>
-      <mat-card-content class="card-footer">
-        {{ item.name.length > 13 ? (item.name | slice:0:13) + '...' : item.name }}
-      </mat-card-content>
-    </mat-card>
-  </div>
+    @for (item of paginatedItems(); track item.id) {
+        <mat-card (click)="sendItem(item)" class="item-card cursor">
+          <div class="color-wrapper">
+            <div class="color-indicator mrg-top-30" [style.background-color]="item.color"></div>
+          </div>
+          <mat-card-content class="card-footer">
+            {{ item.name.length > 13 ? (item.name | slice:0:13) + '...' : item.name }}
+          </mat-card-content>
+        </mat-card>
+      }
+</div>
   
-  <mat-paginator
+<mat-paginator
     class="centerize"
     [length]="filteredItems().length"
     [pageSize]="pageSize()"
     [pageSizeOptions]="pageSizes"
     (page)="paginator.page.emit($event)"
   >
-  </mat-paginator>
+</mat-paginator>
   

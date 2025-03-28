@@ -1,35 +1,33 @@
 <mat-sidenav-container class="dashboard-container">
     <mat-sidenav-content>
-      <div class="dashboard">
-        <div class="management-tool-header">
-          <div class="url-input-container width-400">
-            <input type="text" class="url-input" placeholder="URL" />
-            <button class="go-button">GO</button>
-          </div>
-          <div class="view-actions">
-            <div class="tool-title">Management Tool</div>
-            <div class="view-icons">
-              <button class="grid-view-icon" (click)="toggleViewType()">
-                <img [src]="'assets/list.svg'" />
-              </button>
-              <button class="list-view-icon" (click)="toggleViewType()">
-                <img src="assets/title.svg" />
-              </button>
-              <button class="add-icon" (click)="toggleSidenav()">
-                <img src="assets/title.svg" />
-              </button>
+        <div class="dashboard">
+            <div class="management-tool-header">
+                <div class="url-input-container width-400">
+                    <input type="text" class="url-input" placeholder="URL" />
+                    <button class="go-button">GO</button>
+                </div>
+                <div class="view-actions">
+                    <div class="tool-title">Management Tool</div>
+                    <div class="view-icons">
+                        <img (click)="toggleViewType()" src="assets/svg/title.svg" />
+                        <img (click)="toggleViewType()" src="assets/svg/list.svg" />
+                        <img class="plus-icon" (click)="toggleSidenav()" src="assets/svg/plus.svg" />
+                    </div>
+                </div>
+                <div class="url-input-container">
+                    <mat-icon class="search-icon">search</mat-icon>
+                    <input [(ngModel)]="filterInputValue" (ngModelChange)="onFilterInputChange()" placeholder="Find by name..." class="url-input" />
+                </div>
+                @if (viewType() === 'list') {
+                    <app-table-data (editItem)="editItem($event)" [items]="filteredItems"></app-table-data>
+                } @else if (viewType() === 'grid') {
+                    <app-card-data (editItem)="editItem($event)" [items]="filteredItems"></app-card-data>
+                }
             </div>
-          </div>
-          <div class="url-input-container">
-            <input [(ngModel)]="filterInputValue" (ngModelChange)="onFilterInputChange()" placeholder="Find by name..." class="url-input" />
-          </div>
-          <app-table-data (editItem)="editItem($event)" *ngIf="viewType() === 'list'" [items]="filteredItems"></app-table-data>
-          <app-card-data (editItem)="editItem($event)" *ngIf="viewType() === 'grid'" [items]="filteredItems"></app-card-data>
         </div>
-      </div>
     </mat-sidenav-content>
     <mat-sidenav mode="side" position="end" [opened]="isSidenavOpen()">
         <app-item-fields (close)="toggleSidenav()"></app-item-fields>
     </mat-sidenav>
-  </mat-sidenav-container>
+</mat-sidenav-container>
   

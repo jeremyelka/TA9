@@ -1,13 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-
-interface ItemElement {
-    id:number,
-    color: string;
-    name: string;
-    createDate: string;
-    lastUpdate: string;
-    createdBy: string;
-  }
+import { ItemElement } from 'src/app/interfaces/ItemElement.interface';
 
 export const addOrUpdateItem = createAction(
   '[Item] Add or Update Item',
@@ -22,4 +14,4 @@ export const selectItem = createAction(
 export const addMultipleItems = createAction(
     '[Item] Add Multiple Items',
     props<{ items: ItemElement[] }>()
-  );
+);

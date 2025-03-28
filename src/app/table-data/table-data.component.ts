@@ -7,15 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
-
-interface ItemElement {
-  id:number,
-  color: string;
-  name: string;
-  createDate: string;
-  lastUpdate: string;
-  createdBy: string;
-}
+import { ItemElement } from '../interfaces/ItemElement.interface';
 
 @Component({
   selector: 'app-table-data',
@@ -33,7 +25,7 @@ interface ItemElement {
   templateUrl: './table-data.component.html',
   styleUrls: ['./table-data.component.scss']
 })
-export class TableDataComponent implements OnInit, AfterViewInit {
+export class TableDataComponent implements  AfterViewInit {
 
   @Input() items: Signal<ItemElement[]> = signal([]);
   
@@ -53,8 +45,6 @@ export class TableDataComponent implements OnInit, AfterViewInit {
   });
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  ngOnInit() {}
 
   ngAfterViewInit() {
     if (this.paginator && this.dataSource()) {
