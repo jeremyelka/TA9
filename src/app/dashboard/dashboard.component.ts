@@ -61,19 +61,19 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.apiService.getData('assets/data.json').subscribe({
+    /*this.apiService.getData('assets/data.json').subscribe({
       next: (items : any) => {
         this.itemsSignal.set(items);
       },
       error: (error : any) => {
         console.error('Error fetching items', error);
       }
-    });
-    /*this.itemsSignal.set([
+    });*/
+    this.itemsSignal.set([
       { "id": 1, "color": "#6EE7B7", "name": "Car accident", "createDate": "03/02/2021", "lastUpdate": "03/02/2021", "createdBy": "Ori Lugasi" },
       { "id": 2, "color": "#F472B6", "name": "Human trafficking for prostitution", "createDate": "26/01/2021", "lastUpdate": "26/01/2021", "createdBy": "Ran Shim" },
       { "id": 3, "color": "#DC2626", "name": "Murder", "createDate": "16/10/2021", "lastUpdate": "16/10/2021", "createdBy": "Chen Meir" }
-    ]);*/
+    ]);
     this.store.dispatch(addMultipleItems({ items: this.itemsSignal() }));
     this.subscribeToStore();
   }
