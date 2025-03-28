@@ -29,11 +29,10 @@ import { CommonModule } from '@angular/common';
 })
 export class ItemFieldsComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
-
   selectedColor: string = '#000000';
   newItemTitle: string = '';
   newItemDescription: string = '';
-
+  id: number = 0;
   colorOptions = [
     { value: '#000000' },
     { value: '#FF5733' },
@@ -42,7 +41,6 @@ export class ItemFieldsComponent implements OnInit {
     { value: '#FF33A1' },
     { value: '#FFFF33' },
   ];
-  id: number = 0;
 
   constructor(private store: Store) {}
 
@@ -58,7 +56,6 @@ export class ItemFieldsComponent implements OnInit {
   }
 
   saveChanges() {
-
     const newItem = {
         id: this.id?this.id:this.id=Math.floor(Math.random() * 1000), // Unique ID based on timestamp
         name: this.newItemTitle,
@@ -71,7 +68,6 @@ export class ItemFieldsComponent implements OnInit {
     this.store.dispatch(addOrUpdateItem({ item: newItem }));
   }
   
-
   closeSidebar() {
     this.id = 0;
     this.newItemTitle = '';

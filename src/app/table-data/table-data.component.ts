@@ -31,13 +31,11 @@ export class TableDataComponent implements  AfterViewInit {
   
   @Output() editItem = new EventEmitter<ItemElement>();
 
-
   displayedColumns: string[] = ['color', 'name', 'createDate', 'lastUpdate', 'createdBy'];
 
 
   pageSizes: number[] = [3, 5, 10];
   pageSize = signal(3);
-
 
   dataSource = computed(() => {
     const dataSource = new MatTableDataSource(this.items());
