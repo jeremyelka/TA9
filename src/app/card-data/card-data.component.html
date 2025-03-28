@@ -1,5 +1,5 @@
 <div class="card-container">
-    <mat-card *ngFor="let item of paginatedItems()" class="item-card cursor">
+    <mat-card (click)="sendItem(item)" *ngFor="let item of paginatedItems()" class="item-card cursor">
       <div class="color-wrapper">
         <div class="color-indicator mrg-top-30" [style.background-color]="item.color"></div>
       </div>

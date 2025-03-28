@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, AfterViewInit, Signal, signal, computed } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, AfterViewInit, Signal, signal, computed, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 
 interface ItemElement {
+  id:number,
   color: string;
   name: string;
   createDate: string;
@@ -32,6 +33,7 @@ interface ItemElement {
 })
 export class CardDataComponent implements OnInit, AfterViewInit {
   @Input() items: Signal<ItemElement[]> = signal([]);
+  @Output() editItem = new EventEmitter<ItemElement>();
 
   pageSizes: number[] = [3, 5, 10];
   pageSize = signal(3);
@@ -55,5 +57,9 @@ export class CardDataComponent implements OnInit, AfterViewInit {
       this.currentPage.set(event.pageIndex);
       this.pageSize.set(event.pageSize);
     });
+  }
+
+  sendItem(item : ItemElement){
+    this.editItem.emit(item);
   }
 }

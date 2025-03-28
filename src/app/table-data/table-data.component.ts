@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, AfterViewInit, Signal, signal, computed } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, AfterViewInit, Signal, signal, computed, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 
 interface ItemElement {
+  id:number,
   color: string;
   name: string;
   createDate: string;
@@ -35,9 +36,8 @@ interface ItemElement {
 export class TableDataComponent implements OnInit, AfterViewInit {
 
   @Input() items: Signal<ItemElement[]> = signal([]);
-
-
-  //@Input() viewType: string = 'list';
+  
+  @Output() editItem = new EventEmitter<ItemElement>();
 
 
   displayedColumns: string[] = ['color', 'name', 'createDate', 'lastUpdate', 'createdBy'];
@@ -60,5 +60,9 @@ export class TableDataComponent implements OnInit, AfterViewInit {
     if (this.paginator && this.dataSource()) {
       this.dataSource().paginator = this.paginator;
     }
+  }
+
+  sendItem(item : ItemElement){
+    this.editItem.emit(item);
   }
 }

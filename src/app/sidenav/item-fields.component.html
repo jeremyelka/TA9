@@ -1,0 +1,30 @@
+
+    <button mat-icon-button (click)="closeSidebar()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-toolbar>Create New</mat-toolbar>
+    <div class="sidenav-content">
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div class="input-group">
+          <div class="input-label">Name</div>
+          <input type="text" placeholder="Type tag name..." [(ngModel)]="newItemTitle" class="minimal-input input-tag">
+        </div>
+        <div class="input-group color-input-group">
+          <div class="input-label">Color</div>
+          <div class="select-wrapper">
+            <select [(ngModel)]="selectedColor" class="minimal-select">
+              <option *ngFor="let color of colorOptions" [value]="color.value">
+                {{ color.value }}
+              </option>
+            </select>
+            <div class="color-rectangle" [style.backgroundColor]="selectedColor"></div>
+          </div>
+        </div>
+      </div>
+      <div class="input-group">
+        <div class="input-label">Tag Description</div>
+        <textarea placeholder="Type tag description..." [(ngModel)]="newItemDescription" class="minimal-textarea"></textarea>
+      </div>
+      <button mat-raised-button color="primary" (click)="saveChanges()">Save</button>
+    </div>
+ 

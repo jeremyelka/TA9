@@ -1,63 +1,4 @@
 <mat-sidenav-container class="dashboard-container">
-
-    <mat-sidenav mode="side" position="end" [opened]="isSidenavOpen()">
-        <button mat-icon-button (click)="closeSidenav()">
-          <mat-icon>close</mat-icon>
-        </button>
-        <mat-toolbar>Create New</mat-toolbar>
-        <div class="sidenav-content">
-            <div style="display: flex;align-items: center;justify-content: space-between;">
-
-          <div class="input-group">
-            <div class="input-label">Name</div>
-            <input 
-              type="text" 
-              placeholder="Type tag name..." 
-              [(ngModel)]="newItemTitle"
-              class="minimal-input"
-              style="width: 160%;"
-            >
-          </div>
-      
-
-          <div class="input-group color-input-group">
-            <div class="input-label">Color</div>
-            <div class="select-wrapper">
-              <select 
-                [(ngModel)]="selectedColor" 
-                class="minimal-select"
-                style="width: 40px;"
-              >
-                <option 
-                  *ngFor="let color of colorOptions" 
-                  [value]="color.value"
-                >
-                  {{ color.value }}
-                </option>
-              </select>
-
-              <div 
-                class="color-rectangle" 
-                [style.backgroundColor]="selectedColor"
-              ></div>
-            </div>
-            </div>
-          
-          </div>
-      
-
-          <div class="input-group">
-            <div class="input-label">Tag Description</div>
-            <textarea 
-              placeholder="Type tag description..." 
-              [(ngModel)]="newItemDescription"
-              class="minimal-textarea"
-            ></textarea>
-          </div>
-        </div>
-      </mat-sidenav>
-      
-  
     <mat-sidenav-content>
       <div class="dashboard">
         <div class="management-tool-header">
@@ -65,7 +6,6 @@
             <input type="text" class="url-input" placeholder="URL" />
             <button class="go-button">GO</button>
           </div>
-  
           <div class="view-actions">
             <div class="tool-title">Management Tool</div>
             <div class="view-icons">
@@ -80,27 +20,16 @@
               </button>
             </div>
           </div>
-  
           <div class="url-input-container">
-            <input
-              [(ngModel)]="filterInputValue"
-              (ngModelChange)="onFilterInputChange()"
-              placeholder="Find by name..."
-              class="url-input"
-            />
+            <input [(ngModel)]="filterInputValue" (ngModelChange)="onFilterInputChange()" placeholder="Find by name..." class="url-input" />
           </div>
-  
-          <app-table-data
-            *ngIf="viewType() === 'list'"
-            [items]="filteredItems"
-          ></app-table-data>
-  
-          <app-card-data
-            *ngIf="viewType() === 'grid'"
-            [items]="filteredItems"
-          ></app-card-data>
+          <app-table-data (editItem)="editItem($event)" *ngIf="viewType() === 'list'" [items]="filteredItems"></app-table-data>
+          <app-card-data (editItem)="editItem($event)" *ngIf="viewType() === 'grid'" [items]="filteredItems"></app-card-data>
         </div>
       </div>
     </mat-sidenav-content>
+    <mat-sidenav mode="side" position="end" [opened]="isSidenavOpen()">
+        <app-item-fields (close)="toggleSidenav()"></app-item-fields>
+    </mat-sidenav>
   </mat-sidenav-container>
   

@@ -10,9 +10,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatOption, MatSelect, MatSelectTrigger } from '@angular/material/select';
-
+import { ItemFieldsComponent } from '../sidenav/item-fields.component';
+import { addMultipleItems, selectItem } from '../store/table-store/data-table.actions';
+import { Store } from '@ngrx/store';
+import { selectAllItems } from '../store/table-store/data-table.selector';
 interface ItemElement {
+  id:number,
   color: string;
   name: string;
   createDate: string;
@@ -33,7 +36,8 @@ interface ItemElement {
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    ItemFieldsComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
@@ -50,42 +54,46 @@ export class DashboardComponent implements OnInit {
     );
   });
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
-  selectedColor: string = '#000000';  // Initial color set to black
-  newItemTitle: string = '';
-  newItemDescription: string = '';
-
-  colorOptions = [
-    { value: '#000000' },
-    { value: '#FF5733' },
-    { value: '#33FF57' },
-    { value: '#3357FF' },
-    { value: '#FF33A1' },
-    { value: '#FFFF33' }
-  ];
   isSidenavOpen = signal(false);
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private store: Store) {
+
+  }
 
   ngOnInit() {
-    /*this.apiService.getData('assets/data.json').subscribe({
+    this.apiService.getData('assets/data.json').subscribe({
       next: (items : any) => {
         this.itemsSignal.set(items);
       },
       error: (error : any) => {
         console.error('Error fetching items', error);
       }
-    });*/
-    this.itemsSignal.set([
-      { color: '#6EE7B7', name: 'Car accident', createDate: '03/02/2021', lastUpdate: '03/02/2021', createdBy: 'Ori Lugasi' },
-      { color: '#F472B6', name: 'Human trafficking for prostitution', createDate: '26/01/2021', lastUpdate: '26/01/2021', createdBy: 'Ran Shim' },
-      { color: '#F472B6', name: 'Human trafficking for prostitution', createDate: '26/01/2021', lastUpdate: '26/01/2021', createdBy: 'Ran Shim' },
-      { color: '#F472B6', name: 'Human trafficking for prostitution', createDate: '26/01/2021', lastUpdate: '26/01/2021', createdBy: 'Ran Shim' },
-      { color: '#F472B6', name: 'Human trafficking for prostitution', createDate: '26/01/2021', lastUpdate: '26/01/2021', createdBy: 'Ran Shim' },
-    ]);
+    });
+    /*this.itemsSignal.set([
+      { "id": 1, "color": "#6EE7B7", "name": "Car accident", "createDate": "03/02/2021", "lastUpdate": "03/02/2021", "createdBy": "Ori Lugasi" },
+      { "id": 2, "color": "#F472B6", "name": "Human trafficking for prostitution", "createDate": "26/01/2021", "lastUpdate": "26/01/2021", "createdBy": "Ran Shim" },
+      { "id": 3, "color": "#DC2626", "name": "Murder", "createDate": "16/10/2021", "lastUpdate": "16/10/2021", "createdBy": "Chen Meir" }
+    ]);*/
+    this.store.dispatch(addMultipleItems({ items: this.itemsSignal() }));
+    this.subscribeToStore();
   }
 
-   closeSidenav() {
+  subscribeToStore(){
+    this.store.select(selectAllItems).subscribe(items => {
+      if (items) {
+        this.itemsSignal.set(items);
+      }
+    });
+  }
+
+  closeSidenav() {
     this.sidenav.close();
+  }
+  
+
+  editItem(item : ItemElement) {
+    this.isSidenavOpen.set(true);
+    this.store.dispatch(selectItem({ item }));
   }
 
   toggleViewType() {
@@ -93,11 +101,7 @@ export class DashboardComponent implements OnInit {
   }
 
   onFilterInputChange() {
-    console.log('filterInputValue:', this.filterInputValue);
     this.filterText.set(this.filterInputValue);
-    console.log('filterText signal value:', this.filterText());
-    console.log('filteredItems after filter:', this.filteredItems());
-    console.log('filteredItems after filter:', this.itemsSignal());
   }
 
   toggleSidenav() {
